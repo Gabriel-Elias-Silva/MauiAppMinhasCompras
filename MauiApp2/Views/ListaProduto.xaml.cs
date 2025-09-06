@@ -1,26 +1,69 @@
+﻿using MauiApp2.Models;
 using Microsoft.Maui.Controls;
-using MauiApp2.ViewModels;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MauiApp2.Views
 {
     public partial class ListaProduto : ContentPage
     {
-        private ProdutosViewModel ViewModel => BindingContext as ProdutosViewModel;
+        
+        private ObservableCollection<Produto> lista = new();
 
         public ListaProduto()
         {
             InitializeComponent();
+            lst_produtos.ItemsSource = lista;
         }
 
-        private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)
+        
+        protected async override void OnAppearing()
         {
-            ViewModel?.FiltrarProdutos(e.NewTextValue);
+            base.OnAppearing();
+
+            try
+            {
+                var tmp = await App.Db.GetAll();
+                lista.Clear();
+                tmp.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
         }
 
+        
+        private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string q = e.NewTextValue;
+
+            lista.Clear();
+
+            var tmp = await App.Db.Search(q);
+            tmp.ForEach(i => lista.Add(i));
+        }
+
+        private async void ToolbarItemTotal_Clicked(object sender, EventArgs e)
+        {
+            double soma = lista.Sum(i => i.Total);
+            string msg = $"O total é {soma:C}";
+            await DisplayAlert("Total dos Produtos", msg, "OK");
+        }
+
+    
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-            // Tela de cadastro de produto
-            await Navigation.PushAsync(new NovoProduto());
+            try
+            {
+                await Navigation.PushAsync(new NovoProduto());
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
         }
     }
 }
