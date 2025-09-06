@@ -1,5 +1,6 @@
 ﻿using MauiApp2.Models;
 using SQLite;
+
 namespace MauiApp2.Helpers
 {
     public class SQLiteDatabaseHeper
@@ -36,10 +37,14 @@ namespace MauiApp2.Helpers
 
         public Task<List<Produto>> Search(string q)
         {
-            string sql = "SELECT * Produto SET WHERE descricao LIKE '%" + q + "%' ";
+            string sql = "SELECT * FROM Produto SET WHERE descricao LIKE '%" + q + "%' ";
             return _conn.QueryAsync<Produto>(sql);
 
         }
 
+        internal async Task<IEnumerable<Produto>> GetAllProdutosAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
