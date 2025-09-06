@@ -42,9 +42,6 @@ namespace MauiApp2.Helpers
 
         }
 
-        internal async Task<IEnumerable<Produto>> GetAllProdutosAsync()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
