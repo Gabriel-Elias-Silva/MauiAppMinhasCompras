@@ -9,7 +9,7 @@ namespace MauiApp2.Views
 {
     public partial class ListaProduto : ContentPage
     {
-        
+
         private ObservableCollection<Produto> lista = new();
 
         public ListaProduto()
@@ -18,15 +18,15 @@ namespace MauiApp2.Views
             lst_produtos.ItemsSource = lista;
         }
 
-        
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
             try
             {
-                var tmp = await App.Db.GetAll();
-                lista.Clear();
+                List<Produto> tmp = await App.Db.GetAll();
+
                 tmp.ForEach(i => lista.Add(i));
             }
             catch (Exception ex)
@@ -35,12 +35,12 @@ namespace MauiApp2.Views
             }
         }
 
-        
+
         private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             string q = e.NewTextValue;
 
-            lista.Clear();
+
 
             var tmp = await App.Db.Search(q);
             tmp.ForEach(i => lista.Add(i));
@@ -53,7 +53,7 @@ namespace MauiApp2.Views
             await DisplayAlert("Total dos Produtos", msg, "OK");
         }
 
-    
+
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
             try
