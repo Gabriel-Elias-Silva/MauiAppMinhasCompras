@@ -25,6 +25,7 @@ namespace MauiApp2.Views
 
             try
             {
+                lista.Clear();
                 List<Produto> tmp = await App.Db.GetAll();
 
                 tmp.ForEach(i => lista.Add(i));
