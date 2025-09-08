@@ -5,24 +5,43 @@
              Title="Lista de Produtos">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Novo" Clicked="ToolbarItem_Clicked"/>
-        <ToolbarItem Text="Total" Clicked="ToolbarItemTotal_Clicked"/>
+        <ToolbarItem Text="Somar" Clicked="ToolbarItemTotal_Clicked"/>
+        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
 
-    <StackLayout Padding="10">
+    <VerticalStackLayout Padding="10">
 
+       
         <SearchBar x:Name="txt_search"
-                   Placeholder="Pesquisar produtos"
+                   Placeholder="Busca de Produtos"
                    TextChanged="txt_search_TextChanged"/>
 
-        <ListView x:Name="lst_produtos">
+       
+        <ListView x:Name="lst_produtos" ItemSelected="lst_produtos_ItemSelected">
+            <ListView.Header>
+                <Grid ColumnDefinitions="*,*,*,*,*">
+                    <Label Grid.Column="0" Text="ID" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" Text="Descrição" FontAttributes="Bold"/>
+                    <Label Grid.Column="2" Text="Preço" FontAttributes="Bold"/>
+                    <Label Grid.Column="3" Text="Qnt" FontAttributes="Bold"/>
+                    <Label Grid.Column="4" Text="Total" FontAttributes="Bold"/>
+                </Grid>
+            </ListView.Header>
+
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Descricao}"
-                              Detail="{Binding Preco}" />
+                    <ViewCell>
+                        <Grid ColumnDefinitions="*,*,*,*,*">
+                            <Label Grid.Column="0" Text="{Binding Id}"/>
+                            <Label Grid.Column="1" Text="{Binding Descricao}"/>
+                            <Label Grid.Column="2" Text="{Binding Preco}"/>
+                            <Label Grid.Column="3" Text="{Binding Quantidade}"/>
+                            <Label Grid.Column="4" Text="{Binding Total}"/>
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>
