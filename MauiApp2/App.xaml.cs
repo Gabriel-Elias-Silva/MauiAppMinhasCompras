@@ -1,4 +1,5 @@
 ﻿using MauiApp2.Helpers;
+using System.Globalization;
 
 namespace MauiApp2
 {
@@ -23,6 +24,8 @@ namespace MauiApp2
         public App()
         {
             InitializeComponent();
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR"); 
+
 
             // MainPage = new AppShell();
             MainPage = new NavigationPage(new Views.ListaProduto());
